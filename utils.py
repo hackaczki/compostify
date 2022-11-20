@@ -3,7 +3,8 @@ from pyzbar.pyzbar import decode
 import json
 from urllib.request import urlopen
 
-composte_ready = ['wafle-kukurydziane']
+composte_ready = ['wafle-kukurydziane', "Bakłażan","Batat","Bób","Brokuł","Brukiew","Brukselka","Burak","Cebula","Chrzan","Ciecierzyca","Cukinia","Cykoria","Czosnek","Dynia","Fasola","Fasolka szparagowa","Fenkuł","Groch","Jarmuż","Kalafior","Kalarepa","Kapar","Kapusta","Karczoch","Koper","Kukurydza","Marchew","Miechunka","Ogórek","Oliwka","Papryka","Pasternak","Patison","Pietruszka","Pomidor","Por","Rabarbar","Roszponka","Rukola","Rzepa","Rzeżucha","Rzodkiew","Rzodkiewka","Sałata","Seler","Soczewica","Soja","Szalotka","Szczaw","Szczypiorek","Szparag","Szpinak","Ziemniak"]
+composte_ready = composte_ready.extend([l.lower() for l in composte_ready])
 
 def BarcodeReader(image):
     img = cv2.imread(image)
@@ -25,4 +26,4 @@ def getProductInfo(code):
         return True
     else:
         return False
-print(getProductInfo(BarcodeReader("IMG_0649.jpg")))
+#print(getProductInfo(BarcodeReader("IMG_0649.jpg")))

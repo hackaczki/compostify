@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block includes %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"/>
+{% endblock %}
+
+
+{% block content %}
+
+<form method="POST" enctype=multipart/form-data>
+  <input class="input100" type="text" name="email" placeholder="Login">
+  <br>
+  <br>
+  <input class="input100" type="password" name="password" placeholder="Password" style="font-size: 30px; ">
+  <br>
+  <br>
+  <button style="font-size: 30px;">
+    Submit
+  </button>
+<br>
+<br>
+<br>
+<br>
+
+</form>
+<a href="register" size="30px">I don't have an account yet!</a>
+<br>
+<br>
+<a href="dash">Return to homepage!</a>
+{% endblock %}

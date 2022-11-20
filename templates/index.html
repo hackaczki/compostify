@@ -6,23 +6,44 @@
 
 
 {% block content %}
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for message in messages %}
-           {{ message }}
-        {% endfor %}
-     {% endif %}
-  {% endwith %}
-  <div id="big">
-    Hello world!
-    <br/><br/>
-    What do you want to do?
-    <br/><br/>
-  </div>
+    
   <!--- Action Buttons --->
-  <form method="post">
-    <input type="submit" name="add" value="Add person" class="active">
-    <input type="submit" name="all" value="Show all entries" class="active">
-    <input type="submit" name="last" value="Show last entry" class="active">
-  </form>
+  
+  <div class="split2 left">
+    <h1 style="margin-bottom: 100px;">
+      Recent Posts
+    </h1>
+    <div style="display: flex; flex-direction: row; flex-wrap:wrap">
+      {% if posts %}
+        {% for post in posts %}
+          <div style="width: 300px; height: 100px;">
+            <h2>{{ post.Title }}</h2>
+            <h3><b>Author</b>: {{ getUsernameById(post.Author) }}</h3>
+            <p>{{ post.Text }}</p>
+          </div>
+          
+          
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+  
+  <div class="split1 right">
+    <div class="centered">
+    <h1>Add your post</h1>
+      <br>
+      <br>
+      <br>
+      <form method="post">
+        <input class="input100" type="text" name="title" placeholder="Title" required> <br><br>   
+        <input class="input100" type="text" name="description" placeholder="Description..." style="resize: none; min-height:200px; text-align: start;" required><br><br>
+        <input class="input100" type="submit" name="add" value="Add post" class="active">
+      </form>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
 {% endblock %}

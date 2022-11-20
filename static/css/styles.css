@@ -1,7 +1,17 @@
-html {
+* {
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
   background-color: teal;
-  color: white;
-  font-family: Arial;
+  overflow-x: hidden;
+  color: #f0f0f0;
+  width: 100vw;
 }
 
 footer {
@@ -15,4 +25,70 @@ footer {
 
 .active {
   font-size: 1.5rem;
+}
+
+.input100{
+  border-radius:4px;
+  border: 2px solid #232323;
+  font-family: 'Montserrat', sans-serif;
+  padding:4px !important;
+  font-size:35px;
+}
+
+button{
+  font-family: 'Montserrat', sans-serif;
+  padding: 4px 8px 4px 8px;
+  text-align:center;
+  text-transform:uppercase;
+  font-weight:600;
+  font-size:26px !important;
+}
+
+a{
+  color:black;
+  text-decoration: none;
+  font-size:20px;
+}
+
+/* Split the screen in half */
+.split1 {
+  height: 100%;
+  width: 30%;
+  position: fixed;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+.split2 {
+  height: 100%;
+  width: 70%;
+  position: fixed;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+/* Control the left side */
+.left {
+  left: 0;
+background-color: rgb(13, 139, 139);
+}
+
+/* Control the right side */
+.right {
+  right: 0;
+
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+
+h1 {
+  font-size: 40px;
 }
