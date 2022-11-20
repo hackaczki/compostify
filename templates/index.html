@@ -12,6 +12,7 @@
   <div class="split2 left">
     <h1 style="margin-bottom: 100px;">
       Recent Posts
+      <br/><a href="logout">Logout</a>
     </h1>
     <div style="display: flex; flex-direction: row; flex-wrap:wrap">
       {% if posts %}
@@ -36,7 +37,7 @@
       <br>
       <form method="post">
         <input class="input100" type="text" name="title" placeholder="Title" required> <br><br>   
-        <input class="input100" type="text" name="description" placeholder="Description..." style="resize: none; min-height:200px; text-align: start;" required><br><br>
+        <textarea class="input100" type="text" name="description" placeholder="Description..." style="resize: none; min-height:200px; text-align: start !important; padding: 12px !important;" required></textarea><br><br>
         <input class="input100" type="submit" name="add" value="Add post" class="active">
       </form>
     </div>
