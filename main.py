@@ -10,6 +10,7 @@ from sqlalchemy import func, DateTime
 import bcrypt
 import datetime 
 import plotly.graph_objects as go
+import utils
 
 
 ##### SERVER FLASK
@@ -169,6 +170,16 @@ def forum():
 @server.route('/guide')
 def guide():
     return render_template('guide.html')
+
+@app.route('/success', methods = ['POST'])  
+def success():  
+    if request.method == 'POST':  
+        f = request.files['file']
+        f.save(f.filename)  
+        bcode = utils.BarcodeReader(filename)
+        compost_ready = utils.composte_ready(bcode)
+        compost_ready = "ready" if compost_ready else "not ready"
+        return render_template("guide.html", file = f.filename, compostable = compost_ready) 
 
 @server.route('/composting_tracker')
 def composting_tracker():

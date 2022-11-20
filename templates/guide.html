@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block includes %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"/>
+{% endblock %}
+
+
+{% block content %}
+
+  <!--- Action Buttons --->
+  <ul>
+    <li>Kompostowanie bioodpadów jest naturalną metodą zagospodarowania, która przyspiesza proces ich naturalnego zagospodarowania
+rozkład odpadów organicznych.</li>
+    <li>Dzięki niemu możesz wspomóc rozwój swojego ogródka. Twoje roślinki będą ci wdzięczne za bio kompost.</li>
+    <li>Do tworzenia kompostu najlepiej używaj odpadów takich jak resztki warzyw i owoców, skorupek od jajek i innych względnie łatwo rozkładalnych się rzeczy.</li>
+    <li>Unikaj stosowania tworzyw sztucznych, mięs, kości i innych rzeczy, które mogą się długo rozkładać lub być zanieczyszczone.</li>
+    <li>Poniżej możesz wypróbować nasze narzędzie, które powie Ci czy dana rzecz nadaje się do kompostowania na podstawie kodu kreskowego.</li>
+  </ul>
+    <form action = "/success" method = "post" enctype="multipart/form-data">  
+        <input type="file" name="file" />  
+        <input type = "submit" value="Dodaj">  
+    </form>  
+
+    {% if file %}
+      <p>{{ file }} - According to our data it is {{ compost_ready }} to be composted</p>
+    {% endif %} 
+
+
+  <br>
+  <br>
+  <br>
+  <br>
+{% endblock %}
