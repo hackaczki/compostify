@@ -102,8 +102,9 @@ app.layout = html.Div(style={'backgroundColor': colors['background'], 'font-fami
     html.Div(children=['Compostify: A web application framework for your ECO trash.', 
 
     html.Div(children=[html.Br(),
-                       html.A(href='/composting_tracker', children=html.Button('Track Compositing', n_clicks=0, style={'padding': '4px 8px 4px 8px', 'text_align':'center','text-transform':'uppercase', 'font-weight':'600', 'font-size':'26px !important', 'margin': '8px'})),
-                html.A(href='/forum', children=html.Button('Visit Forum', n_clicks=0, style={'padding': '4px 8px 4px 8px', 'text_align':'center','text-transform':'uppercase', 'font-weight':'600', 'font-size':'26px !important', 'margin': '8px'}))
+                       html.A(href='/composting_tracker', children=html.Button('Track Your Compost', n_clicks=0, style={'padding': '4px 8px 4px 8px', 'text_align':'center','text-transform':'uppercase', 'font-weight':'600', 'font-size':'26px !important', 'margin': '8px'})),
+                html.A(href='/forum', children=html.Button('Visit Forum', n_clicks=0, style={'padding': '4px 8px 4px 8px', 'text_align':'center','text-transform':'uppercase', 'font-weight':'600', 'font-size':'26px !important', 'margin': '8px'})),
+                html.A(href='/guide', children=html.Button('Look at the Guide', n_clicks=0, style={'padding': '4px 8px 4px 8px', 'text_align':'center','text-transform':'uppercase', 'font-weight':'600', 'font-size':'26px !important', 'margin': '8px'}))
             ])
                        ], style={
         'textAlign': 'center',
@@ -139,7 +140,6 @@ def verifyPassword(username, provided_password):
 def createAccount(username, password):
     if Users.query.filter_by(Username=username).first():
         return False
-    date_created = datetime.datetime.now()
     password = hashPassword(password)
     user = Users(Username = username, Password = password)
     db.session.add(user)
@@ -165,6 +165,14 @@ def forum():
         addPost(user,title,desc)
     p = Posts.query.all()
     return render_template('index.html', posts=p, getUsernameById=getUsernameById)
+
+@server.route('/guide')
+def guide():
+    return render_template('guide.html')
+
+@server.route('/composting_tracker')
+def composting_tracker():
+    return redirect(url_for('/'))
 
 @server.route('/register', methods=['GET', 'POST'])
 def register():
