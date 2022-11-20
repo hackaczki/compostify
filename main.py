@@ -1,5 +1,5 @@
 import dash
-from dash import dcc, html
+from dash import dcc, html, Input, Output, ctx
 import flask
 from flask.templating import render_template
 from data_processing import *
@@ -9,6 +9,9 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, DateTime
 import bcrypt
 import datetime 
+import plotly.graph_objects as go
+
+
 ##### SERVER FLASK
 
 server = flask.Flask(__name__)
@@ -59,8 +62,17 @@ def home():
     return "Welcome to Compostify!"
 
 df = read_composte_data() 
-fig = px.line(df, x="Countries:text", y=["2004:number", "2020:number"], markers=True)
-mapfig = px.choropleth(locations=df['Countries:code'], color=df['2020:number'], scope="europe")
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=df["Countries:text"], y=df["2004:number"], name='% Composting 2004',
+                         line=dict(color='firebrick', dash='dot', width=6)))
+fig.add_trace(go.Scatter(x=df["Countries:text"], y=df["2020:number"], name = '% Composting 2020',
+                         line=dict(color='royalblue', width=6)))
+
+mapfig = px.choropleth(locations=df['Countries:code'], color=df['2004:number'], scope="europe", width=800, height=800, title="% of Composting by Country in 2004")
+
+mapfig2 = px.choropleth(locations=df['Countries:code'], color=df['2020:number'], scope="europe", width=800, height=800, title="% of Composting by Country in 2020")
+
 fig.update_layout(
     plot_bgcolor=colors['background'],
     paper_bgcolor=colors['background'],
@@ -71,26 +83,38 @@ mapfig.update_layout(
     paper_bgcolor=colors['background'],
     font_color=colors['text']
 )
-
+mapfig2.update_layout(
+    plot_bgcolor=colors['background'],
+    paper_bgcolor=colors['background'],
+    font_color=colors['text']
+)
 app = dash.Dash(server=server, routes_pathname_prefix="/dash/")
 
-app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
+app.layout = html.Div(style={'backgroundColor': colors['background'], 'font-family': 'Arial'}, children=[
     html.H1(
-        children='Compostify!',
+        children=[html.Br(), 'Compostify!'],
         style={
             'textAlign': 'center',
             'color': colors['text']
         }
     ),
 
-    html.Div(children='Compostify: A web application framework for your ECO trash.', style={
+    html.Div(children=['Compostify: A web application framework for your ECO trash.', 
+
+    html.Div(children=[html.Br(),
+                       html.A(href='/composting_tracker', children=html.Button('Track Compositing', n_clicks=0, style={'padding': '4px 8px 4px 8px', 'text_align':'center','text-transform':'uppercase', 'font-weight':'600', 'font-size':'26px !important', 'margin': '8px'})),
+                html.A(href='/forum', children=html.Button('Visit Forum', n_clicks=0, style={'padding': '4px 8px 4px 8px', 'text_align':'center','text-transform':'uppercase', 'font-weight':'600', 'font-size':'26px !important', 'margin': '8px'}))
+            ])
+                       ], style={
         'textAlign': 'center',
         'color': colors['text']
     }),
 
     dcc.Graph(id='graph', figure=fig),
-    dcc.Graph(figure=mapfig)
-    ])
+    html.Div(children=[
+        dcc.Graph(figure=mapfig, style={'display': 'inline-block'}),
+        dcc.Graph(figure=mapfig2, style={'display': 'inline-block'})],
+        style={'text-align': 'center'})])
 
 ##### REST OF FLASK 
 def getIdByUsername(userid):
